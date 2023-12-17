@@ -64,7 +64,10 @@ searchForm.addEventListener('submit', function onSearchFormSubmmited(event) {
     return alert(`您輸入的關鍵字：${keyword} 沒有符合條件的電影`)
   }
 
-  renderUserCards(filteredUsers)
+  //預設顯示第 1 頁的搜尋結果
+  renderUserCards(getNameByPage(1))
+  //重製分頁器
+  renderPaginator(filteredUsers.length)
 })
 
 
@@ -118,18 +121,21 @@ function addtoFavorite(id) {
 
 // 
 function getNameByPage(page) {
+
+  const data = filteredUsers.length ? filteredUsers : userList
+  console.log(data)
   //0~11, 12~23
   const startIndex = (page - 1) * NAMELIST_PER_PAGE
 
   // 回傳切割後的新陣列 記得加return!!!
-  return userList.slice(startIndex, startIndex + NAMELIST_PER_PAGE)
+  return data.slice(startIndex, startIndex + NAMELIST_PER_PAGE)
   // renderUserCards()
   // 現在，串接 Index API 拿到總清單 userlist 以後 ，不要一口氣全部輸出，只要顯示第 1 頁的資料就好：
 }
 
 
 function renderPaginator(amount) {
-  let howManyPage = Math.ceil(userList.length / NAMELIST_PER_PAGE)
+  let howManyPage = Math.ceil(amount / NAMELIST_PER_PAGE)
   console.log(howManyPage) //17
   console.log(amount) //200
 
